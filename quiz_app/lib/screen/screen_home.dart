@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:quiz_app/model/model_quiz.dart';
+import 'package:quiz_app/screen/screen_quiz.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -6,6 +8,23 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  List<Quiz> quizs = [
+    Quiz.fromMap({
+      'title': 'test',
+      'candidates': ['a', 'b', 'c', 'd'],
+      'answer': 0
+    }),
+    Quiz.fromMap({
+      'title': 'test',
+      'candidates': ['a', 'b', 'c', 'd'],
+      'answer': 0
+    }),
+    Quiz.fromMap({
+      'title': 'test',
+      'candidates': ['a', 'b', 'c', 'd'],
+      'answer': 0
+    })
+  ];
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
@@ -46,7 +65,6 @@ class _HomeScreenState extends State<HomeScreen> {
             _buildStep(width, '1.'),
             _buildStep(width, '2.'),
             _buildStep(width, '3.'),
-
             Padding(
               padding: EdgeInsets.all(width * 0.048),
             ),
@@ -55,26 +73,28 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Center(
                 child: ButtonTheme(
                   minWidth: width * 0.8,
-                    height: height * 0.8,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: ElevatedButton(
-                      onPressed:() {},
-                      style: ElevatedButton.styleFrom(
+                  height: height * 0.8,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: ((context) => QuizScreen(quizs: quizs))));
+                    },
+                    style: ElevatedButton.styleFrom(
                       elevation: 5,
-                      backgroundColor: Colors.deepPurple,
+                      primary: Colors.deepPurple,
                       // 테두리 모양 설정
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
-                      child: Text(
-                        'now get the test.',
-                         style:  TextStyle(color: Colors.white),
-                         ),
-                         ),
-                   ),
+                    child: Text(
+                      'now get the test.',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ),
               ),
             )
           ],
@@ -82,22 +102,24 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+
   Widget _buildStep(double width, String title) {
-      return Container(
-        padding: EdgeInsets.fromLTRB(width * 0.048, width * 0.024, width * 0.048, width * 0.024),
-        child: Row(crossAxisAlignment: CrossAxisAlignment.start,
+    return Container(
+      padding: EdgeInsets.fromLTRB(
+          width * 0.048, width * 0.024, width * 0.048, width * 0.024),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-           Icon(
+          Icon(
             Icons.check_box,
             size: width * 0.04,
-           ),
-           Padding(
+          ),
+          Padding(
             padding: EdgeInsets.only(right: width * 0.024),
-           ),
-           Text(title),
+          ),
+          Text(title),
         ],
-        ),
-      );
-
-    }
+      ),
+    );
+  }
 }
